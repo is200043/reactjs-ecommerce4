@@ -29,7 +29,7 @@ class AppBar extends React.Component {
           level="4"
           margin="xsmall"
         >
-          Devincube store
+          DekHippoZaa Store
         </Heading>
         <Box style={{ width: 300 }} direction="row">
           <ShoppingCartButton />

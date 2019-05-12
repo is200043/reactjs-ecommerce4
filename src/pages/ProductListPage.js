@@ -1,8 +1,12 @@
-import React, { Component } from 'react'
-import { Box, TextInput } from 'grommet'
-import ProductList from '../components/ProductList'
+import React, { Component } from 'react';
+import { Box, TextInput } from 'grommet';
+import ProductList from '../components/ProductList';
+import { connect } from 'react-redux';
 
-export default class ProductListPage extends Component {
+class ProductListPage extends Component {
+  componentDidMount() {
+    this.props.getCartItems();
+  }
   state = {
     query: ''
   }
@@ -14,12 +18,24 @@ export default class ProductListPage extends Component {
         fill
       >
         <Box width="medium">
-          <TextInput onChange={(e) => this.setState({query: e.target.value})}/>
+          <TextInput onChange={(e) => this.setState({ query: e.target.value })} />
         </Box>
         <Box flex>
-          <ProductList search={this.state.query}/>
+          <ProductList search={this.state.query} />
         </Box>
-      </Box>
-    )
+      </Box >
+    );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    cartItems: state.cart.cartItems
+  }
+}
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getCartItems: dispatch.cart.getCartItemsAsync
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(ProductListPage);

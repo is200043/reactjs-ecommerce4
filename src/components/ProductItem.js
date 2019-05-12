@@ -11,17 +11,13 @@ import { Shop } from 'grommet-icons'
 import { connect } from 'react-redux'
 
 class ProductItem extends React.Component {
-  handleAddToCart = async () => {
+  handleAddToCart = () => {
     console.log('Add to cart')
     const {
-      addItem,
+      addItemAsync,
       id
     } = this.props;
-    await addItem({
-      id,
-      quantity: 1,
-      type: 'cart_item',
-    });
+    addItemAsync(id);
   }
   render() {
     const { name, description, image, price } = this.props
@@ -63,7 +59,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
   return {
-    addItem: dispatch.cart.addItem
+    addItemAsync: dispatch.cart.addItemAsync
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(ProductItem)

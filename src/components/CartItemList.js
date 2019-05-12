@@ -1,31 +1,50 @@
-import React, { Component } from 'react'
-import { Box } from 'grommet';
+import React, { Component } from 'react';
+import { Box, Button } from 'grommet';
 import { connect } from 'react-redux';
+import { Close } from 'grommet-icons';
 
 class CartItemList extends Component {
+  handleDeleteToCart = (id) => {
+      console.log('Delete to cart')
+      const {
+          deleteItemAsync
+      } = this.props;
+      deleteItemAsync(id);
+  }
   render() {
     const {
       cartItems,
-      totalPrice,
     } = this.props
     return (
       <Box pad="small">
-        {cartItems.map(item => (
-          <Box pad="small" border="bottom">
-            {item.name} x {item.amount}
-          </Box>
-        ))}
-        <Box pad="small" border="bottom">
-          {totalPrice} Baht
+        {
+          cartItems.map((product) => (
+            <Box style={{ width: 350 }} pad="small" border="bottom" >
+            <Box direction="row" >
+                <Box pad="small">
+                    {product.name} <br/>
+                    {product.quantity} x {product.amount} = {product.totalPrice}
+                </Box>
+                <Button
+                    icon={<Close />}
+                    pad="small"
+                    onClick={(e) => this.handleDeleteToCart(product.id)}></Button>
+            </Box>
         </Box>
+          ))
+        }
       </Box>
     )
   }
 }
 const mapStateToProps = state => {
   return {
-    cartItems: state.cart.cartItems,
-    totalPrice: state.cart.totalPrice
+    cartItems: state.cart.cartItems
   }
 }
-export default connect(mapStateToProps)(CartItemList)
+const mapDispatchToProps = dispatch => {
+  return {
+      deleteItemAsync: dispatch.cart.deleteItemAsync
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(CartItemList)

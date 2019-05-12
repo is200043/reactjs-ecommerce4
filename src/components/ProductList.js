@@ -12,17 +12,17 @@ class ProductList extends React.Component {
     this.fetchData()
   }
   componentDidUpdate(prevProps, prevState) {
-    if(prevProps.search !== this.props.search) {
-      console.log('Search change', this.props.search)
+    if (prevProps.search !== this.props.search) {
+      this.fetchData();
     }
   }
   fetchData = async () => {
-    const res = await request.get('/products?include=main_image')
+    const res = await request.get('/products?include=main_image' + (this.props.search !== "" ? '&filter=eq(name,' + this.props.search + ')' : ''));
     const data = res.data.data.map(item => {
       let image = 'https://via.placeholder.com/300x400.png';
       if (item.relationships.main_image) {
         const fileId = item.relationships.main_image.data.id
-        const file = res.data.included.main_images.find(function(el) {
+        const file = res.data.included.main_images.find(function (el) {
           return fileId === el.id;
         });
         image = file.link.href

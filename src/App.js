@@ -17,13 +17,13 @@ class App extends Component {
         <Grommet plain full>
           <Box direction="column" fill>
             <AppBar />
-            {/* <ProductListPage /> */}
+
             <Switch>
               <Route path="/" exact component={ProductListPage} />
               <Route path="/checkout" exact component={CheckoutPage} />
               <Route path="/login" exact component={LoginPage} />
               <PrivateRoute path="/profile" exact component={ProfilePage} />
-              <Route patch="**" component={() => <h1>Not Found</h1>} />
+              <Route path="**" component={() => <h1>Not Found</h1>} />
             </Switch>
           </Box>
         </Grommet>
