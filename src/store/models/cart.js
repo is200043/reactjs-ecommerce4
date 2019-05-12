@@ -11,35 +11,6 @@ export const cart = {
     totalPrice: 0
   },
   reducers: {
-    // handle state changes with pure functions
-    // addItem(state, payload) {
-    //   const item = state.cartItems.find(o => o.productId === payload);
-    //   if (item) {
-    //     const cartItems = state.cartItems.map(o => {
-    //       if (o.productId === payload) {
-    //         return {
-    //           ...o,
-    //           amount: o.amount + 1
-    //         }
-    //       }
-    //       return o
-    //     })
-    //     return {
-    //       ...state,
-    //       cartItems
-    //     }
-    //   }
-    //   return {
-    //     ...state,
-    //     cartItems: [{
-    //       productId: payload,
-    //       amount: 1
-    //     }, ...state.cartItems]
-    //   }
-    // },
-    // deleteItem(state, payload) {
-    //   return state
-    // },
     setCartItems(state, payload) {
       return {
         ...state,

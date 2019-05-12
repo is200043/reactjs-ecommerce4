@@ -14,11 +14,26 @@ export const user = {
   },
   effects: (dispatch) => ({
     async login(payload, rootState) {
-      const token = 'dfdfkldshafdsoahgfoddsfgh4353rtytytiuoypsgdsgh';
-      if (payload.username === 'demo' && payload.password === 'password') {
-        return dispatch.user.setToken(token);
+      let headers = {
+        'Content-Type': 'application/json',
       }
-      return Promise.reject("Username or password not found")
+      let data = {
+        "data": {
+          "type": "token",
+          "email": payload.username,
+          "password": payload.password
+        }
+      }
+      try {
+        const res = await request.post('/customers/tokens', data, { headers: headers });
+        console.log(res.data);
+        const token = res.data.data.token;
+        if (token != null) {
+          return dispatch.user.setToken(token);
+        }
+      } catch (error) {
+        return Promise.reject("Username or password not found")
+      }
     },
     async logout(payload, rootState) {
       dispatch.user.setToken(null);

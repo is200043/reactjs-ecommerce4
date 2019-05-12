@@ -20,6 +20,7 @@ class LoginForm extends Component {
         try {
             await login(this.state);
             alert("Login Success");
+            this.props.history.push('/profile')
         } catch (error) {
             alert("Login Fail");
         }
