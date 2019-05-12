@@ -3,8 +3,9 @@ import { Box, TextInput, Button } from 'grommet'
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-class LoginForm extends Component {
+class RegisterForm extends Component {
     state = {
+        name: "",
         username: "",
         password: ""
     }
@@ -13,21 +14,29 @@ class LoginForm extends Component {
             [e.target.name]: e.target.value
         })
     }
-    handleLogin = async () => {
+    handleRegister = async () => {
         const {
-            login
+            register
         } = this.props;
         try {
-            await login(this.state);
-            alert("Login Success");
+            await register(this.state);
+            alert("Register Success");
+            this.props.history.push('/login')
         } catch (error) {
-            alert("Login Fail");
+            console.log(error)
+            alert("Register Fail");
         }
     }
     render() {
         return (
             <Box width="medium"
                 justify='between'>
+                <Box direction="row" margin="xxsmall">
+                    <TextInput
+                        name="name"
+                        placeholder="Name"
+                        onChange={this.handleChange} />
+                </Box>
                 <Box direction="row" margin="xxsmall">
                     <TextInput
                         name="username"
@@ -41,14 +50,7 @@ class LoginForm extends Component {
                         type="password"
                         onChange={this.handleChange} />
                 </Box>
-                <Button label="Sign in" primary onClick={this.handleLogin} />
-                <Box direction="row" margin="xxsmall">
-                    <Button primary
-                        pad="xxsmall"
-                        margin="xxsmall"
-                        label="Register"
-                        onClick={() => this.props.history.push('/register')} />
-                </Box>
+                <Button label="Submit" primary onClick={this.handleRegister} />
             </Box>
         )
     }
@@ -57,7 +59,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
     return {
-        login: dispatch.user.login
+        register: dispatch.user.register
     }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(LoginForm))
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(RegisterForm))

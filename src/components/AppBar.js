@@ -1,8 +1,8 @@
 import React from 'react'
-import { withRouter } from 'react-router-dom'
 import { Box, Heading, Button } from 'grommet';
 import ShoppingCartButton from './ShoppingCartButton';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import store from '../store';
 
 class AppBar extends React.Component {
@@ -34,7 +34,7 @@ class AppBar extends React.Component {
         <Box style={{ width: 300 }} direction="row">
           <ShoppingCartButton />
           {
-            !isAuthenticated ? <Button label="Login" onClick={() => this.props.login()} /> :
+            !isAuthenticated ? <Button label="Login" onClick={() => this.props.history.push('/login')} /> :
               <Button label="Logout" onClick={() => this.props.logout()} />
           }
           {
